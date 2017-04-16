@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\GameEngine.cpp" />
+    <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,9 @@
     <ClInclude Include="src\Engine\IGameEngine.h" />
     <ClInclude Include="src\GameState\IGameState.h" />
     <ClInclude Include="src\GameState\GameState.h" />
+    <ClInclude Include="src\Input\IInputManager.h" />
+    <ClInclude Include="src\Input\Input.h" />
+    <ClInclude Include="src\Input\InputManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
