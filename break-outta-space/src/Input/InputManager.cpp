@@ -66,14 +66,20 @@ namespace Input
 
 	bool InputManager::GetKeyDown(const std::string& KeyEventName)
 	{
+		std::map<std::string, InputControl>::const_iterator input = mControlMap.find(KeyEventName);
+		if (input == mControlMap.end())
+		{
+			return false;
+		}
+
 		// first check if it's a mouse button or a keyboard key we're checking for
-		if (mControlMap[KeyEventName].inputType == KeyboardInput)
+		else if (input->second.inputType == KeyboardInput)
 		{
 			// next return if the key is down
 			return m_currentKeyState[mControlMap[KeyEventName].keyCode];
 		}
 
-		else if (mControlMap[KeyEventName].inputType == MouseInput)
+		else if (input->second.inputType == MouseInput)
 		{
 			// next return if the button is down
 			return m_currentMouseState[mControlMap[KeyEventName].mouseButton];
@@ -84,50 +90,72 @@ namespace Input
 
 	bool InputManager::GetKeyUp(const std::string& KeyEventName)
 	{
+		std::map<std::string, InputControl>::const_iterator input = mControlMap.find(KeyEventName);
+		if (input == mControlMap.end())
+		{
+			return false;
+		}
+
 		// first check if it's a mouse button or a keyboard key we're checking for
-		if (mControlMap[KeyEventName].inputType == KeyboardInput)
+		else if (input->second.inputType == KeyboardInput)
 		{
 			// next return the opposite of the key state
 			return !m_currentKeyState[mControlMap[KeyEventName].keyCode];
 		}
 
-		else if (mControlMap[KeyEventName].inputType == MouseInput)
+		else if (input->second.inputType == MouseInput)
 		{
 			// next return opposite of the button state
 			return !m_currentMouseState[mControlMap[KeyEventName].mouseButton];
 		}
+		return false;
 	}
 
 	bool InputManager::GetKeyPressed(const std::string& KeyEventName)
 	{
+		std::map<std::string, InputControl>::const_iterator input = mControlMap.find(KeyEventName);
+		if (input == mControlMap.end())
+		{
+			return false;
+		}
+
 		// first check if it's a mouse button or a keyboard key we're checking for
-		if (mControlMap[KeyEventName].inputType == KeyboardInput)
+		else if (input->second.inputType == KeyboardInput)
 		{
 			// next return true if the key is currently down but was up last frame
 			return (m_currentKeyState[mControlMap[KeyEventName].keyCode] && !m_previousKeyState[mControlMap[KeyEventName].keyCode]);
 		}
 
-		else if (mControlMap[KeyEventName].inputType == MouseInput)
+		else if (input->second.inputType == MouseInput)
 		{
 			// next return true if the mouse button is currently down but was up last frame
 			return (m_currentMouseState[mControlMap[KeyEventName].mouseButton] && !m_previousMouseState[mControlMap[KeyEventName].mouseButton]);
 		}
+		return false;
 	}
 
 	bool InputManager::GetKeyReleased(const std::string& KeyEventName)
 	{
+
+		std::map<std::string, InputControl>::const_iterator input = mControlMap.find(KeyEventName);
+		if (input == mControlMap.end())
+		{
+			return false;
+		}
+
 		// first check if it's a mouse button or a keyboard key we're checking for
-		if (mControlMap[KeyEventName].inputType == KeyboardInput)
+		else if (input->second.inputType == KeyboardInput)
 		{
 			// next return true if the key is currently up but was up last frame
 			return (!m_currentKeyState[mControlMap[KeyEventName].keyCode] && m_previousKeyState[mControlMap[KeyEventName].keyCode]);
 		}
 
-		else if (mControlMap[KeyEventName].inputType == MouseInput)
+		else if (input->second.inputType == MouseInput)
 		{
 			// next return true if the mouse button is currently up but was up last frame
 			return (!m_currentMouseState[mControlMap[KeyEventName].mouseButton] && m_previousMouseState[mControlMap[KeyEventName].mouseButton]);
 		}
+		return false;
 	}
 
 	MousePoint InputManager::GetMousePosition()
