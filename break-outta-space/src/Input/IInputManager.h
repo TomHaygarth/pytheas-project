@@ -39,7 +39,6 @@ namespace Input
 		virtual bool GetKeyReleased(const std::string& KeyEventName) = 0;
 		virtual void SetMouseSensitvity(const float& sensitivity) = 0;
 		virtual const float& GetMouseSensitivity() = 0;
-		virtual int GetMouseWheelScroll() = 0;
 		virtual MousePoint GetMousePosition() = 0;
 		virtual void SetMousePosition(int x, int y) = 0;
 	};
