@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClCompile Include="src\Engine\GameEngine.cpp" />
     <ClCompile Include="src\GameState\GameStateInfoBundle.cpp" />
+    <ClCompile Include="src\GameState\PlayState.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
@@ -97,6 +98,7 @@
     <ClInclude Include="src\GameState\IGameState.h" />
     <ClInclude Include="src\GameState\IGameStateInfoBundle.h" />
     <ClInclude Include="src\GameState\GameState.h" />
+    <ClInclude Include="src\GameState\PlayState.h" />
     <ClInclude Include="src\Input\IInputManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\InputManager.h" />
