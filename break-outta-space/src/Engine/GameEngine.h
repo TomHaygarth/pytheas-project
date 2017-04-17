@@ -19,6 +19,7 @@ namespace Engine
 	private:
 
 		const bool Initialise();
+		const bool InitialiseFistGameState();
 
 		void CleanUp();
 

@@ -1,5 +1,9 @@
 #include "GameEngine.h"
 #include "../GameState/IGameState.h"
+#include "../GameState/PlayState.h"
+#include "../GameState/GameStateInfoBundle.h"
+
+#include "../Input/InputManager.h"
 
 #include <iostream>
 #include <GL/glew.h>
@@ -44,24 +48,27 @@ namespace Engine
 					break;
 				
 				case SDL_KEYDOWN:
-					m_quitGame = true;
-					break;
-				
 				case SDL_MOUSEBUTTONDOWN:
+				case SDL_KEYUP:
+				case SDL_MOUSEBUTTONUP:
+					m_inputManager->UpdateKeys(e);
 					break;
 
-				case SDLK_0:
 
 				default:
 					break;
 				}
 			}
 
+			glClearColor(0.0, 0.0, 0.0, 1.0);
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			if (m_currentGameState != nullptr)
 			{
 				const Uint32 currentTick = SDL_GetTicks();
 				m_currentGameState->OnUpdate(currentTick - m_prevTickCount);
 				m_prevTickCount = currentTick;
+				m_inputManager->Update();
 
 				glPushMatrix();
 				m_currentGameState->OnRenderGame();
@@ -70,8 +77,6 @@ namespace Engine
 				m_currentGameState->OnRenderUI();
 				
 			}
-			glClearColor(0.0, 0.0, 0.0, 1.0);
-			glClear(GL_COLOR_BUFFER_BIT);
 			SDL_GL_SwapWindow(m_sdlWindow);
 		}
 
@@ -115,11 +120,49 @@ namespace Engine
 			return false;
 		}
 
+		m_inputManager = new Input::InputManager(*m_sdlWindow);
+
+		m_currentGameState = new GameState::PlayState(*m_inputManager);
+
+		if (!InitialiseFistGameState())
+		{
+			CleanUp();
+			return false;
+		}
+
+		return true;
+		
+	}
+
+	const bool GameEngine::InitialiseFistGameState()
+	{
+		GameState::GameStateInfoBundle stateBundle;
+		stateBundle.SetInt("highscore", 100);
+
+		if (m_currentGameState->OnInitialise(stateBundle) != 0)
+		{
+			std::cout << "Failed to initialize game state" << std::endl;
+			return false;
+		}
+
 		return true;
 	}
 
 	void GameEngine::CleanUp()
 	{
+		if (m_currentGameState != nullptr)
+		{
+			m_currentGameState->OnDestroy();
+			delete m_currentGameState;
+			m_currentGameState = nullptr;
+		}
+
+		if (m_inputManager != nullptr)
+		{
+			delete m_inputManager;
+			m_inputManager = nullptr;
+		}
+
 		SDL_GL_DeleteContext(m_sdlGLContext);
 
 		SDL_DestroyWindow(m_sdlWindow);

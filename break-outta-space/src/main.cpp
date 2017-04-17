@@ -1,11 +1,20 @@
-#include <iostream>
-#include <SDL.h>
+
+#include "Engine\IGameEngine.h"
+#include "Engine\GameEngine.h"
 
 int main(int, char**){
-	if (SDL_Init(SDL_INIT_VIDEO) != 0){
-		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-		return 1;
-	}
-	SDL_Quit();
-	return 0;
+
+	Engine::IGameEngine* gameEngine = new Engine::GameEngine();
+
+	int result = gameEngine->Run();
+
+	delete gameEngine;
+	gameEngine = nullptr;
+
+#ifdef _DEBUG
+	system("pause");
+#endif // DEBUG
+
+
+	return result;
 }
