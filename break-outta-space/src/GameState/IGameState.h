@@ -14,7 +14,7 @@ namespace GameState
 		virtual const int OnPause(const IGameStateInfoBundle& stateBundle) = 0;
 		virtual const int OnDestroy() = 0;
 		
-		virtual void OnUpdate(const unsigned int& deltaTimeMs) = 0;
+		virtual void OnUpdate(const float& deltaTimeS) = 0;
 		virtual void OnRenderGame() = 0;
 		virtual void OnRenderUI() = 0;
 	};

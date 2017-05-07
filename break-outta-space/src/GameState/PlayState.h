@@ -19,7 +19,7 @@ namespace GameState
 		const int OnPause(const IGameStateInfoBundle& stateBundle);
 		const int OnDestroy();
 
-		void OnUpdate(const unsigned int& deltaTimeMs);
+		void OnUpdate(const float& deltaTimeS);
 		void OnRenderGame();
 		void OnRenderUI();
 

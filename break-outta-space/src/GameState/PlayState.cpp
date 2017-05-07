@@ -43,7 +43,7 @@ namespace GameState
 		return 0;
 	}
 
-	void PlayState::OnUpdate(const unsigned int & deltaTimeMs)
+	void PlayState::OnUpdate(const float& deltaTimeS)
 	{
 		if (m_inputManager.GetKeyPressed("left"))
 		{
