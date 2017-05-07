@@ -91,6 +91,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Graphics\Sprites\ISprite.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Engine\GameEngine.h" />
     <ClInclude Include="src\Engine\IGameEngine.h" />
@@ -99,6 +100,10 @@
     <ClInclude Include="src\GameState\IGameStateInfoBundle.h" />
     <ClInclude Include="src\GameState\GameState.h" />
     <ClInclude Include="src\GameState\PlayState.h" />
+    <ClInclude Include="src\Graphics\Graphics.h" />
+    <ClInclude Include="src\Graphics\IGraphicsManager.h" />
+    <ClInclude Include="src\Graphics\IShader.h" />
+    <ClInclude Include="src\Graphics\Sprites\ISpriteFactory.h" />
     <ClInclude Include="src\Input\IInputManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\InputManager.h" />

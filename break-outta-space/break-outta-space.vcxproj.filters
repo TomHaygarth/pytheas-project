@@ -31,6 +31,18 @@
     <Filter Include="Source Files\GameState">
       <UniqueIdentifier>{a88162bc-9bf1-4a0e-8c8d-6885f6918868}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{1b45ec30-5c4f-426c-9db2-ca4409d79e8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{bd8d0842-98af-4ab8-8d39-0c99588ffae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Sprites">
+      <UniqueIdentifier>{0b0de12b-7519-4b63-9b13-a77e6dc377f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Sprites">
+      <UniqueIdentifier>{ee8bd9bc-214b-4be4-b31a-123da9ed24db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -82,6 +94,24 @@
     </ClInclude>
     <ClInclude Include="src\GameState\GameStateInfoBundle.h">
       <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Graphics.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\IGraphicsManager.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\GraphicalStructs.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\IShader.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Sprites\ISpriteFactory.h">
+      <Filter>Header Files\Graphics\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Sprites\ISprite.h">
+      <Filter>Header Files\Graphics\Sprites</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
