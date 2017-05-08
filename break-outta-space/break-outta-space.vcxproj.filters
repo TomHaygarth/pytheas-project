@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Physics2D">
       <UniqueIdentifier>{619fd3d1-2bab-40b1-b8e7-eee7be9b63a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{06286dad-66c8-44d7-ae49-fbad9da14bd3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Physics2D">
       <UniqueIdentifier>{7e076881-9d62-454b-820a-b1f52c66fcf4}</UniqueIdentifier>
     </Filter>
@@ -203,5 +206,13 @@
     <ClInclude Include="src\GameComponents\IBlockManager.h">
       <Filter>Header Files\GameComponents</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Shaders\simpleSpriteFrag.glsl">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\simpleSpriteVert.glsl">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
