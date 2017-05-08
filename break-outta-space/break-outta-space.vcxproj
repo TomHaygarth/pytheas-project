@@ -85,7 +85,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\GameEngine.cpp" />
+    <ClCompile Include="src\GameComponents\Ball.cpp" />
+    <ClCompile Include="src\GameComponents\Block.cpp" />
+    <ClCompile Include="src\GameComponents\BlockManager.cpp" />
     <ClCompile Include="src\GameComponents\GameObject.cpp" />
+    <ClCompile Include="src\GameComponents\Paddle.cpp" />
     <ClCompile Include="src\GameState\GameStateInfoBundle.cpp" />
     <ClCompile Include="src\GameState\PlayState.cpp" />
     <ClCompile Include="src\Graphics\GraphicsManager.cpp" />
@@ -96,11 +100,15 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameComponents\Ball.h" />
+    <ClInclude Include="src\GameComponents\Block.h" />
     <ClInclude Include="src\GameComponents\GameObject.h" />
     <ClInclude Include="src\GameComponents\IBlock.h" />
     <ClInclude Include="src\GameComponents\GameComponents.h" />
+    <ClInclude Include="src\GameComponents\BlockManager.h" />
     <ClInclude Include="src\GameComponents\IBlockManager.h" />
     <ClInclude Include="src\GameComponents\IGameObject.h" />
+    <ClInclude Include="src\GameComponents\Paddle.h" />
     <ClInclude Include="src\Graphics\Sprites\ISprite.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Engine\GameEngine.h" />
