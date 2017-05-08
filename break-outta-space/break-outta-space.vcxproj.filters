@@ -43,6 +43,12 @@
     <Filter Include="Source Files\Graphics\Sprites">
       <UniqueIdentifier>{ee8bd9bc-214b-4be4-b31a-123da9ed24db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameComponents">
+      <UniqueIdentifier>{77a16cf4-42d9-47c2-a879-6aa171e1b98e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameComponents">
+      <UniqueIdentifier>{4cfb3f6f-b0ef-43a3-bf14-c8172bc1d9be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -71,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\Sprites\SpriteFactory.cpp">
       <Filter>Source Files\Graphics\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameComponents\GameObject.cpp">
+      <Filter>Source Files\GameComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +145,21 @@
     </ClInclude>
     <ClInclude Include="src\Graphics\Sprites\SpriteFactory.h">
       <Filter>Header Files\Graphics\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameComponents\GameComponents.h">
+      <Filter>Header Files\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameComponents\IGameObject.h">
+      <Filter>Header Files\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameComponents\IBlock.h">
+      <Filter>Header Files\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameComponents\GameObject.h">
+      <Filter>Header Files\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameComponents\IBlockManager.h">
+      <Filter>Header Files\GameComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

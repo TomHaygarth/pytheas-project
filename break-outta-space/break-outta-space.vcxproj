@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Engine\GameEngine.cpp" />
+    <ClCompile Include="src\GameComponents\GameObject.cpp" />
     <ClCompile Include="src\GameState\GameStateInfoBundle.cpp" />
     <ClCompile Include="src\GameState\PlayState.cpp" />
     <ClCompile Include="src\Graphics\GraphicsManager.cpp" />
@@ -95,6 +96,11 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameComponents\GameObject.h" />
+    <ClInclude Include="src\GameComponents\IBlock.h" />
+    <ClInclude Include="src\GameComponents\GameComponents.h" />
+    <ClInclude Include="src\GameComponents\IBlockManager.h" />
+    <ClInclude Include="src\GameComponents\IGameObject.h" />
     <ClInclude Include="src\Graphics\Sprites\ISprite.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Engine\GameEngine.h" />
