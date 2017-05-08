@@ -44,9 +44,34 @@ namespace GameState
 		keyInput = { Input::KeyboardInput,  SDLK_RIGHT };
 		m_inputManager.RegisterKeyBinding("right", keyInput);
 
-		m_colorR = 0.0f;
-		m_colorG = 0.0f;
-		m_colorB = 0.0f;
+		keyInput = { Input::KeyboardInput,  SDLK_SPACE };
+		m_inputManager.RegisterKeyBinding("launch", keyInput);
+
+		m_spriteShader = m_graphicsManager.LoadShaders("Resources/Shaders/simpleSpriteVert.glsl", "Resources/Shaders/simpleSpriteFrag.glsl");
+		glm::mat4 wvp = m_graphicsManager.GetMVPMatrix();
+		m_spriteShader->SetMatrixAttrib("WVP", wvp);
+
+		Graphics::TEXTURE_INFO backgroundTexture = m_graphicsManager.LoadTexture("Resources/Textures/nebula_bg.png", m_spriteShader->GetShaderID());
+		m_backgroundSprite = m_spriteFactory.CreateSprite(backgroundTexture, *m_spriteShader, glm::vec2(1280, 720), glm::vec3(640.0f, 360.0f, 0.0f));
+
+		Graphics::TEXTURE_INFO blockTexture = m_graphicsManager.LoadTexture("Resources/Textures/planet_block.png", m_spriteShader->GetShaderID());
+		m_BlockManager = new GameComponents::BlockManager(m_spriteFactory, blockTexture, *m_spriteShader);
+
+		Graphics::TEXTURE_INFO paddleTexture = m_graphicsManager.LoadTexture("Resources/Textures/platform_paddle.png", m_spriteShader->GetShaderID());
+		Graphics::Sprites::ISprite* paddleSprite = m_spriteFactory.CreateSprite(paddleTexture, *m_spriteShader, glm::vec2(128, 32), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(0.5f, 0.5f, 1.0f));
+
+		m_paddle = new GameComponents::Paddle(paddleSprite, glm::vec3(640.0f, 688.8f, 0.0f));
+
+		Graphics::TEXTURE_INFO ballTexture = m_graphicsManager.LoadTexture("Resources/Textures/ship.png", m_spriteShader->GetShaderID());
+		Graphics::Sprites::ISprite* ballSprite = m_spriteFactory.CreateSprite(ballTexture, *m_spriteShader, glm::vec2(32, 32), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		m_ball = new GameComponents::Ball(ballSprite, glm::vec3(640.0f, 672.8f, 0.0f),16.0f);
+
+		m_lifeCounter = m_spriteFactory.CreateSprite(ballTexture, *m_spriteShader, glm::vec2(32, 32), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+		
+		if (!m_BlockManager->LoadLevel(0))
+		{
+			return 1;
+		}
 
 		return 0;
 	}
@@ -63,33 +88,112 @@ namespace GameState
 
 	const int PlayState::OnDestroy()
 	{
+		if (m_lifeCounter != nullptr)
+		{
+			delete m_lifeCounter;
+			m_lifeCounter = nullptr;
+		}
+
+		if (m_ball != nullptr)
+		{
+			delete m_ball;
+			m_ball = nullptr;
+		}
+
+		if (m_paddle != nullptr)
+		{
+			delete m_paddle;
+			m_paddle = nullptr;
+		}
+
+		if (m_BlockManager != nullptr)
+		{
+			delete m_BlockManager;
+			m_BlockManager = nullptr;
+		}
+
+		if (m_backgroundSprite != nullptr)
+		{
+			delete m_backgroundSprite;
+			m_backgroundSprite = nullptr;
+		}
+		
+		if (m_spriteShader != nullptr)
+		{
+			delete m_spriteShader;
+			m_spriteShader = nullptr;
+		}
+
 		return 0;
 	}
 
 	void PlayState::OnUpdate(const float& deltaTimeS)
 	{
-		if (m_inputManager.GetKeyPressed("left"))
+		if (m_inputManager.GetKeyDown("left"))
 		{
-			m_colorR = 1.0f;
-		}
-		else if (m_inputManager.GetKeyReleased("left"))
-		{
-			m_colorR = 0;
+			m_paddle->MoveLeft(deltaTimeS);
 		}
 
-		if (m_inputManager.GetKeyPressed("right"))
+		if (m_inputManager.GetKeyDown("right"))
 		{
-			m_colorG = 1.0f;
+			m_paddle->MoveRight(deltaTimeS);
 		}
-		else if (m_inputManager.GetKeyReleased("right"))
+
+		if (m_inputManager.GetKeyPressed("launch") && !m_ball->HasLaunched())
 		{
-			m_colorG = 0;
+			m_ball->LaunchBall();
+		}
+		
+		m_ball->UpdateMovement(deltaTimeS, *m_paddle);
+
+		if (m_ball->HasLaunched())
+		{
+			m_BlockManager->CheckBlockCollisions(*m_ball);
+			GameComponents::BallCollision collision = m_ball->CheckCollision(*m_paddle);
+
+			if (std::get<0>(collision))
+			{
+				glm::vec2 collisionDiff = std::get<1>(collision);
+				m_ball->ReactToCollision(collisionDiff);
+				m_ball->ReactToPaddle(*m_paddle);
+			}
+		}
+
+
+		if (m_ball->GetPosition().y > m_graphicsManager.GetScreenSize().y)
+		{
+			m_ball->Respawn();
+			--m_currentLives;
+		}
+
+		if (m_currentLives <= 0)
+		{
+			ResetGame();
+		}
+
+		if (m_BlockManager->BlocksLeft() <= 0)
+		{
+			LoadNextLevel();
 		}
 	}
 	void PlayState::OnRenderGame()
 	{
-		glClearColor(m_colorR, m_colorG, m_colorB, 1.0);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glm::mat4 wvp = m_graphicsManager.GetMVPMatrix();
+		m_spriteShader->SetMatrixAttrib("WVP", wvp);
+		m_backgroundSprite->Render();
+		m_BlockManager->RenderBlocks();
+		m_paddle->Render();
+		m_ball->Render();
+
+		const float spacing = 32.0f;
+		const float screenWidth = m_graphicsManager.GetScreenSize().x;
+		
+		for (int i = 0; i < m_currentLives; ++i)
+		{
+			glm::vec3 lifeCounterPos( screenWidth - (spacing * i) -spacing, spacing, 0.0f);
+			m_lifeCounter->SetPosition(lifeCounterPos);
+			m_lifeCounter->Render();
+		}
 	}
 	void PlayState::OnRenderUI()
 	{
