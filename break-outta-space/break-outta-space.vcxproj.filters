@@ -66,6 +66,12 @@
     <ClCompile Include="src\Graphics\GraphicsManager.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Sprites\Sprite.cpp">
+      <Filter>Source Files\Graphics\Sprites</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Sprites\SpriteFactory.cpp">
+      <Filter>Source Files\Graphics\Sprites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Engine.h">
@@ -122,7 +128,13 @@
     <ClInclude Include="src\Graphics\Sprites\ISpriteFactory.h">
       <Filter>Header Files\Graphics\Sprites</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphics\Sprites\Sprite.h">
+      <Filter>Header Files\Graphics\Sprites</Filter>
+    </ClInclude>
     <ClInclude Include="src\Graphics\Sprites\ISprite.h">
+      <Filter>Header Files\Graphics\Sprites</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Graphics\Sprites\SpriteFactory.h">
       <Filter>Header Files\Graphics\Sprites</Filter>
     </ClInclude>
   </ItemGroup>

@@ -89,6 +89,8 @@
     <ClCompile Include="src\GameState\PlayState.cpp" />
     <ClCompile Include="src\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
+    <ClCompile Include="src\Graphics\Sprites\Sprite.cpp" />
+    <ClCompile Include="src\Graphics\Sprites\SpriteFactory.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
@@ -108,7 +110,9 @@
     <ClInclude Include="src\Graphics\IGraphicsManager.h" />
     <ClInclude Include="src\Graphics\IShader.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
+    <ClInclude Include="src\Graphics\Sprites\Sprite.h" />
     <ClInclude Include="src\Graphics\Sprites\ISpriteFactory.h" />
+    <ClInclude Include="src\Graphics\Sprites\SpriteFactory.h" />
     <ClInclude Include="src\Input\IInputManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\InputManager.h" />
