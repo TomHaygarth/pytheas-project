@@ -2,15 +2,38 @@
 #include "PlayState.h"
 #include "../Input/IInputManager.h"
 
+#include "../Graphics/GraphicalStructs.h"
+#include "../Graphics/IGraphicsManager.h"
+#include "../Graphics/IShader.h"
+#include "../Graphics/Sprites/ISpriteFactory.h"
+#include "../Graphics/Sprites/ISprite.h"
+
+#include "../GameComponents/BlockManager.h"
+#include "../GameComponents/Paddle.h"
+#include "../GameComponents/Ball.h"
+
 #include <SDL_keycode.h>
-#include<GL\glew.h>
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <iostream>
 
 namespace GameState
 {
-	PlayState::PlayState(Input::IInputManager & inputManager)
-		:m_inputManager(inputManager)
+	PlayState::PlayState(Input::IInputManager & inputManager, Graphics::IGraphicsManager& graphicsManager, Graphics::Sprites::ISpriteFactory& spriteFactory)
+		:m_inputManager(inputManager),
+		m_graphicsManager(graphicsManager),
+		m_spriteFactory(spriteFactory),
+		m_backgroundSprite(nullptr),
+		m_spriteShader(nullptr),
+		m_BlockManager(nullptr),
+		m_paddle(nullptr),
+		m_ball(nullptr),
+		m_lifeCounter(nullptr),
+		m_maxLives(3),
+		m_currentLives(3),
+		m_maxLevels(2),
+		m_currentLevel(0)
 	{
-
 	}
 
 	const int PlayState::OnInitialise(const IGameStateInfoBundle & stateBundle)
@@ -70,5 +93,29 @@ namespace GameState
 	}
 	void PlayState::OnRenderUI()
 	{
+	}
+
+	void PlayState::ResetGame()
+	{
+		m_currentLives = m_maxLives;
+		if(!m_BlockManager->LoadLevel(m_currentLevel))
+		{
+			std::cout << "Failed to load level: " << m_currentLevel << std::endl;
+		}
+	}
+	void PlayState::LoadNextLevel()
+	{
+		++m_currentLevel;
+
+		if (m_currentLevel == m_maxLevels)
+		{
+			m_currentLevel = 0;
+		}
+
+		if (!m_BlockManager->LoadLevel(m_currentLevel))
+		{
+			std::cout << "Failed to load level: " << m_currentLevel << std::endl;
+		}
+		m_ball->Respawn();
 	}
 }

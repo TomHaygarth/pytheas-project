@@ -5,8 +5,13 @@
 
 #include "../Input/InputManager.h"
 
+#include "../Graphics/GraphicsManager.h"
+#include "../Graphics/Sprites/SpriteFactory.h"
+
 #include <iostream>
 #include <GL/glew.h>
+#include <stdlib.h>
+#include <time.h>
 
 namespace Engine
 {
@@ -15,18 +20,23 @@ namespace Engine
 		m_currentGameState = nullptr;
 		m_sdlWindow = nullptr;
 		m_inputManager = nullptr;
+		m_graphicsManager = nullptr;
+		m_spriteFactory = nullptr;
 		m_quitGame = false;
 	}
 
 
-	GameEngine::~GameEngine(void)
+	GameEngine::~GameEngine()
 	{
 	}
 
 	const int GameEngine::Run()
 	{
+
 		bool initSuccess = Initialise();
 		int errorCode = 0;
+
+		glBindVertexArray(0);
 
 		if (!initSuccess)
 		{
@@ -61,22 +71,25 @@ namespace Engine
 			}
 
 			glClearColor(0.0, 0.0, 0.0, 1.0);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glBindVertexArray(mVertexArray);
 
 			if (m_currentGameState != nullptr)
 			{
 				const Uint32 currentTick = SDL_GetTicks();
-				m_currentGameState->OnUpdate(currentTick - m_prevTickCount);
+				const float msToS = 1.0f / 1000.0f;
+				const float deltaTime = static_cast<float>(currentTick - m_prevTickCount) * msToS;
+
+				m_currentGameState->OnUpdate(deltaTime);
 				m_prevTickCount = currentTick;
 				m_inputManager->Update();
 
-				glPushMatrix();
 				m_currentGameState->OnRenderGame();
-				glPopMatrix();
 
 				m_currentGameState->OnRenderUI();
 				
 			}
+			glBindVertexArray(0);
 			SDL_GL_SwapWindow(m_sdlWindow);
 		}
 
@@ -93,11 +106,14 @@ namespace Engine
 			return false;
 		}
 
+		const int screenWidth = 1280;
+		const int screenHeight = 720;
+
 		m_sdlWindow = SDL_CreateWindow("Break outta space",
 									   SDL_WINDOWPOS_CENTERED,
 									   SDL_WINDOWPOS_CENTERED,
-									   640,
-									   480,
+									   screenWidth,
+									   screenHeight,
 									   SDL_WINDOW_OPENGL);
 		if (m_sdlWindow == nullptr)
 		{
@@ -120,9 +136,24 @@ namespace Engine
 			return false;
 		}
 
-		m_inputManager = new Input::InputManager(*m_sdlWindow);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDepthFunc(GL_LESS);
 
-		m_currentGameState = new GameState::PlayState(*m_inputManager);
+		glGenVertexArrays(1, &mVertexArray);
+		glBindVertexArray(mVertexArray);
+
+		srand(static_cast<unsigned int>(time(NULL)));
+
+		m_inputManager = new Input::InputManager(*m_sdlWindow);
+		
+		m_graphicsManager = new Graphics::GraphicsManager(static_cast<float>(screenWidth), static_cast<float>(screenHeight), m_sdlWindow);
+
+		m_spriteFactory = new Graphics::Sprites::SpriteFactory();
+
+		m_currentGameState = new GameState::PlayState(*m_inputManager, *m_graphicsManager, *m_spriteFactory);
+
+		glBindVertexArray(0);
 
 		if (!InitialiseFistGameState())
 		{
@@ -150,11 +181,25 @@ namespace Engine
 
 	void GameEngine::CleanUp()
 	{
+		glDeleteVertexArrays(1, &mVertexArray);
+
 		if (m_currentGameState != nullptr)
 		{
 			m_currentGameState->OnDestroy();
 			delete m_currentGameState;
 			m_currentGameState = nullptr;
+		}
+
+		if (m_spriteFactory != nullptr)
+		{
+			delete m_spriteFactory;
+			m_spriteFactory = nullptr;
+		}
+
+		if (m_graphicsManager != nullptr)
+		{
+			delete m_graphicsManager;
+			m_graphicsManager = nullptr;
 		}
 
 		if (m_inputManager != nullptr)
