@@ -98,6 +98,7 @@
     <ClCompile Include="src\Graphics\Sprites\SpriteFactory.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Physics2D\AABBCollider2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameComponents\Ball.h" />
@@ -130,6 +131,9 @@
     <ClInclude Include="src\Input\IInputManager.h" />
     <ClInclude Include="src\Input\Input.h" />
     <ClInclude Include="src\Input\InputManager.h" />
+    <ClInclude Include="src\Physics2D\AABBCollider2D.h" />
+    <ClInclude Include="src\Physics2D\IAABBCollider2D.h" />
+    <ClInclude Include="src\Physics2D\Physics2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

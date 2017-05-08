@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{bd8d0842-98af-4ab8-8d39-0c99588ffae8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Physics2D">
+      <UniqueIdentifier>{619fd3d1-2bab-40b1-b8e7-eee7be9b63a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics2D">
+      <UniqueIdentifier>{7e076881-9d62-454b-820a-b1f52c66fcf4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Graphics\Sprites">
       <UniqueIdentifier>{0b0de12b-7519-4b63-9b13-a77e6dc377f4}</UniqueIdentifier>
     </Filter>
@@ -80,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="src\GameComponents\GameObject.cpp">
       <Filter>Source Files\GameComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics2D\AABBCollider2D.cpp">
+      <Filter>Source Files\Physics2D</Filter>
     </ClCompile>
     <ClCompile Include="src\GameComponents\Block.cpp">
       <Filter>Source Files\GameComponents</Filter>
@@ -131,6 +140,9 @@
     <ClInclude Include="src\Graphics\Graphics.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Physics2D\Physics2D.h">
+      <Filter>Header Files\Physics2D</Filter>
+    </ClInclude>
     <ClInclude Include="src\Graphics\IGraphicsManager.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -169,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="src\GameComponents\GameObject.h">
       <Filter>Header Files\GameComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics2D\IAABBCollider2D.h">
+      <Filter>Header Files\Physics2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics2D\AABBCollider2D.h">
+      <Filter>Header Files\Physics2D</Filter>
     </ClInclude>
     <ClInclude Include="src\GameComponents\Block.h">
       <Filter>Header Files\GameComponents</Filter>
