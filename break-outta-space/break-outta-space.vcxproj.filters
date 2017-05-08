@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Physics2D">
       <UniqueIdentifier>{619fd3d1-2bab-40b1-b8e7-eee7be9b63a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{439c919c-02a6-4aa2-a563-dbac84b2315f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Levels">
+      <UniqueIdentifier>{5b9f0a87-fe08-4ef0-996c-50d71d8c10e0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Resources\Shaders">
       <UniqueIdentifier>{06286dad-66c8-44d7-ae49-fbad9da14bd3}</UniqueIdentifier>
     </Filter>
@@ -214,5 +220,13 @@
     <None Include="Resources\Shaders\simpleSpriteVert.glsl">
       <Filter>Resources\Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Levels\level_0.txt">
+      <Filter>Resources\Levels</Filter>
+    </Text>
+    <Text Include="Resources\Levels\level_1.txt">
+      <Filter>Resources\Levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

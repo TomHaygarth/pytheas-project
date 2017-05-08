@@ -139,6 +139,10 @@
     <None Include="Resources\Shaders\simpleSpriteFrag.glsl" />
     <None Include="Resources\Shaders\simpleSpriteVert.glsl" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Levels\level_0.txt" />
+    <Text Include="Resources\Levels\level_1.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
