@@ -100,7 +100,7 @@ namespace Engine
 
 	const bool GameEngine::Initialise()
 	{
-		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
+		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
 			std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 			return false;
