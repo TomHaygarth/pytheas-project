@@ -111,6 +111,9 @@
     <ClCompile Include="src\GameComponents\BlockManager.cpp">
       <Filter>Source Files\GameComponents</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameComponents\Blackhole.cpp">
+      <Filter>Source Files\GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Engine\Engine.h">
@@ -212,6 +215,9 @@
     <ClInclude Include="src\GameComponents\IBlockManager.h">
       <Filter>Header Files\GameComponents</Filter>
     </ClInclude>
+    <ClInclude Include="src\GameComponents\Blackhole.h">
+      <Filter>Header Files\GameComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\simpleSpriteFrag.glsl">
@@ -220,12 +226,18 @@
     <None Include="Resources\Shaders\simpleSpriteVert.glsl">
       <Filter>Resources\Shaders</Filter>
     </None>
+    <None Include="Resources\Shaders\parallax3Frag.glsl">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Levels\level_0.txt">
       <Filter>Resources\Levels</Filter>
     </Text>
     <Text Include="Resources\Levels\level_1.txt">
+      <Filter>Resources\Levels</Filter>
+    </Text>
+    <Text Include="Resources\Levels\level_2.txt">
       <Filter>Resources\Levels</Filter>
     </Text>
   </ItemGroup>

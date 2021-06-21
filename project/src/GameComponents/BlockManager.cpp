@@ -2,6 +2,7 @@
 #include "BlockManager.h"
 #include "Block.h"
 #include "Ball.h"
+#include "Blackhole.h"
 #include "../Graphics/Sprites/ISpriteFactory.h"
 #include "../Physics2D/IAABBCollider2D.h"
 #include <sstream>
@@ -10,9 +11,10 @@
 
 namespace GameComponents
 {
-	BlockManager::BlockManager(Graphics::Sprites::ISpriteFactory& spriteFactory, const Graphics::TEXTURE_INFO & texture, Graphics::IShader & shader)
+	BlockManager::BlockManager(Graphics::Sprites::ISpriteFactory& spriteFactory, const Graphics::TEXTURE_INFO & blockTexture, Graphics::TEXTURE_INFO const & blackholeTexture, Graphics::IShader & shader)
 		:m_spriteFactory(spriteFactory),
-		m_texture(texture),
+        m_blockTexture(blockTexture),
+        m_blackholeTexture(blackholeTexture),
 		m_shader(shader),
 		m_maxBlockColumns(10),
 		m_maxBlockRows(8)
@@ -22,11 +24,13 @@ namespace GameComponents
 	BlockManager::~BlockManager()
 	{
 		CleanupBlocks();
+        CleanupBlackholes();
 	}
 
 	bool BlockManager::LoadLevel(const int & level)
 	{
 		CleanupBlocks();
+        CleanupBlackholes();
 
 		std::ostringstream filePath;
 		filePath << "Resources/Levels/level_" << level << ".txt";
@@ -63,6 +67,12 @@ namespace GameComponents
 				case '2':
 					CreateBlock(i, j, 2, glm::vec3(1.0f, 0.5f, 0.1f));
 					break;
+                case 'b':
+                    CreateBlackhole(i, j, 1.0f, 50.0f);
+                    break;
+                case 'B':
+                    CreateBlackhole(i, j, 2.0f, 125.0f);
+                    break;
 				default:
 					break;
 				}
@@ -117,14 +127,21 @@ namespace GameComponents
 		{
 			(*itBlocks)->Render();
 		}
+
+        for (std::vector<Blackhole *>::const_iterator itBlackholes = m_blackholes.begin(); itBlackholes != m_blackholes.end(); ++itBlackholes)
+        {
+            (*itBlackholes)->Render();
+        }
 	}
+
+    const float blockWidth = 128.0f;
+    const float blockHeight = 64.0f;
+
 	void BlockManager::CreateBlock(int gridColumn, int gridRow, int strength, glm::vec3 color)
 	{
-		const float blockWidth = 128.0f;
-		const float blockHeight = 64.0f;
 
 		glm::vec3 position((static_cast<float>(gridColumn) * blockWidth) + (blockWidth * 0.5f), (static_cast<float>(gridRow) * blockHeight) + (blockHeight * 0.5f), 0.0f);
-		Graphics::Sprites::ISprite* blockSprite = m_spriteFactory.CreateSprite(m_texture, m_shader, glm::vec2(blockWidth, blockHeight), position, 0.0f, color);
+		Graphics::Sprites::ISprite* blockSprite = m_spriteFactory.CreateSprite(m_blockTexture, m_shader, glm::vec2(blockWidth, blockHeight), position, 0.0f, color);
 
 		Block* block = new Block(blockSprite, position, strength);
 
@@ -139,4 +156,29 @@ namespace GameComponents
 			itBlocks = m_blocks.erase(itBlocks);
 		}
 	}
+
+    void BlockManager::CreateBlackhole(int gridColumn, int gridRow, float const size, float const gravitationalDensity)
+    {
+        float constexpr blackholeDefaultDiameter = 32.0f;
+        float constexpr blackholeDefaultCollisionRadius = 12.0f;
+        float const blackholeDiameter = blackholeDefaultDiameter * size;
+        float const blackholeCollisionRadius = blackholeDefaultCollisionRadius * size;
+
+        glm::vec3 position((static_cast<float>(gridColumn) * blockWidth) + (blockWidth * 0.5f), (static_cast<float>(gridRow) * blockHeight) + (blockHeight * 0.5f), 0.0f);
+
+        Graphics::Sprites::ISprite* blackholeSprite = m_spriteFactory.CreateSprite(m_blackholeTexture, m_shader, glm::vec2(blackholeDiameter, blackholeDiameter), position, 0.0f, glm::vec3(1.0f));
+
+        Blackhole* blackhole = new Blackhole(blackholeSprite, position, blackholeCollisionRadius, gravitationalDensity);
+
+        m_blackholes.push_back(blackhole);
+    }
+    void BlockManager::CleanupBlackholes()
+    {
+        std::vector<Blackhole*>::iterator itBlackhole = m_blackholes.begin();
+        while (itBlackhole != m_blackholes.end())
+        {
+            delete (*itBlackhole);
+            itBlackhole = m_blackholes.erase(itBlackhole);
+        }
+    }
 }

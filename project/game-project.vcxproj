@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="src\Engine\GameEngine.cpp" />
     <ClCompile Include="src\GameComponents\Ball.cpp" />
+    <ClCompile Include="src\GameComponents\Blackhole.cpp" />
     <ClCompile Include="src\GameComponents\Block.cpp" />
     <ClCompile Include="src\GameComponents\BlockManager.cpp" />
     <ClCompile Include="src\GameComponents\GameObject.cpp" />
@@ -103,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameComponents\Ball.h" />
+    <ClInclude Include="src\GameComponents\Blackhole.h" />
     <ClInclude Include="src\GameComponents\Block.h" />
     <ClInclude Include="src\GameComponents\GameObject.h" />
     <ClInclude Include="src\GameComponents\IBlock.h" />
@@ -137,12 +139,14 @@
     <ClInclude Include="src\Physics2D\Physics2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Shaders\parallax3Frag.glsl" />
     <None Include="Resources\Shaders\simpleSpriteFrag.glsl" />
     <None Include="Resources\Shaders\simpleSpriteVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Levels\level_0.txt" />
     <Text Include="Resources\Levels\level_1.txt" />
+    <Text Include="Resources\Levels\level_2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

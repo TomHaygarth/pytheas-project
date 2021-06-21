@@ -10,4 +10,5 @@ namespace GameComponents
 	class Block;
 	class Ball;
 	class Paddle;
+    class Blackhole;
 }

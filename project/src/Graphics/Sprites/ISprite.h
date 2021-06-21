@@ -10,6 +10,7 @@ namespace Graphics
 		class ISprite
 		{
 		public:
+            virtual ~ISprite() {};
 			virtual const glm::vec3& GetPosition() const = 0;
 			virtual const glm::vec2& GetSize() const = 0;
 			virtual const glm::vec3& GetColor() const = 0;

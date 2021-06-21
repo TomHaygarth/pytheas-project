@@ -27,6 +27,8 @@ namespace GameComponents
 
 		const bool HasLaunched() const { return !m_isStuck; }
 
+        void ApplyGravityPull(glm::vec2 pullVelocity) { m_velocity += pullVelocity; }
+
 	private:
 
 		enum Direction{

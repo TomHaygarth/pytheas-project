@@ -11,6 +11,7 @@
 #include "../GameComponents/BlockManager.h"
 #include "../GameComponents/Paddle.h"
 #include "../GameComponents/Ball.h"
+#include "../GameComponents/Blackhole.h"
 
 #include <SDL_keycode.h>
 #include <GL/glew.h>
@@ -54,8 +55,9 @@ namespace GameState
 		Graphics::TEXTURE_INFO backgroundTexture = m_graphicsManager.LoadTexture("Resources/Textures/nebula_bg.png", m_spriteShader->GetShaderID());
 		m_backgroundSprite = m_spriteFactory.CreateSprite(backgroundTexture, *m_spriteShader, glm::vec2(1280, 720), glm::vec3(640.0f, 360.0f, 0.0f));
 
-		Graphics::TEXTURE_INFO blockTexture = m_graphicsManager.LoadTexture("Resources/Textures/planet_block.png", m_spriteShader->GetShaderID());
-		m_BlockManager = new GameComponents::BlockManager(m_spriteFactory, blockTexture, *m_spriteShader);
+        Graphics::TEXTURE_INFO blockTexture = m_graphicsManager.LoadTexture("Resources/Textures/planet_block.png", m_spriteShader->GetShaderID());
+        Graphics::TEXTURE_INFO blackholeTexture = m_graphicsManager.LoadTexture("Resources/Textures/blackhole.png", m_spriteShader->GetShaderID());
+		m_BlockManager = new GameComponents::BlockManager(m_spriteFactory, blockTexture, blackholeTexture, *m_spriteShader);
 
 		Graphics::TEXTURE_INFO paddleTexture = m_graphicsManager.LoadTexture("Resources/Textures/platform_paddle.png", m_spriteShader->GetShaderID());
 		Graphics::Sprites::ISprite* paddleSprite = m_spriteFactory.CreateSprite(paddleTexture, *m_spriteShader, glm::vec2(128, 32), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(0.5f, 0.5f, 1.0f));
@@ -157,6 +159,13 @@ namespace GameState
 				m_ball->ReactToCollision(collisionDiff);
 				m_ball->ReactToPaddle(*m_paddle);
 			}
+
+            auto const & blackholes = m_BlockManager->GetBlackholes();
+            for (auto const & blackhole : blackholes)
+            {
+                glm::vec2 gravity = blackhole->CalculateGravitationalPullOnObject(*m_ball) * deltaTimeS;
+                m_ball->ApplyGravityPull(gravity);
+            }
 		}
 
 
